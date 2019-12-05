@@ -30,4 +30,5 @@ dependencies {
 //    implementation 'com.facebook.fresco:animated-webp:0.12.0'
 //    implementation 'com.facebook.fresco:webpsupport:0.12.0'
     implementation project(':mywbplib')
+//    implementation 'com.github.Jameni:WebpViewLib:v1.0.1'
 }

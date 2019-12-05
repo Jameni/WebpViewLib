@@ -40,6 +40,7 @@ public class WebpView extends LinearLayout implements View.OnClickListener {
 
     private SimpleDraweeView img;
     private Button btnPlay;
+    private AbstractDraweeController build;
 
     public void initView(Context context) {
         this.context = context;
@@ -59,15 +60,32 @@ public class WebpView extends LinearLayout implements View.OnClickListener {
     public void onClick(View v) {
 
         if (v.getId() == R.id.btn_load_move) {
+            startPlay();
+        }
 
-            String strUri = "res://" + context.getPackageName() + "/" + R.drawable.taogaoqin;
+    }
 
-            PrintUtil.printMsg("资源地址： " + strUri);
-            AbstractDraweeController build = Fresco.newDraweeControllerBuilder()
-                    .setUri(Uri.parse(strUri))
-                    .setControllerListener(controllerListener)
-                    .build();
-            img.setController(build);
+    public void startPlay() {
+        String strUri = "res://" + context.getPackageName() + "/" + R.drawable.taogaoqin;
+
+        PrintUtil.printMsg("资源地址： " + strUri);
+        build = Fresco.newDraweeControllerBuilder()
+                .setUri(Uri.parse(strUri))
+                .setControllerListener(controllerListener)
+                .build();
+        build.release();
+        img.setController(build);
+    }
+
+
+    public void destory() {
+        if (build != null) {
+
+            img.setController(null);
+            build = null;
+            img = null;
+
+
         }
 
     }
@@ -83,6 +101,11 @@ public class WebpView extends LinearLayout implements View.OnClickListener {
                 // app-specific logic to enable animation starting
                 anim.start();
             }
+        }
+
+        @Override
+        public void onRelease(String id) {
+            super.onRelease(id);
         }
     };
 }
